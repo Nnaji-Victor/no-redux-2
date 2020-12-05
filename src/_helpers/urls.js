@@ -1,3 +1,3 @@
 export const urls = {
-    APP_URL : "http://no-redux.com/api"
+    APP_URL : "https://no-redux.com/api"
 }
