@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import PrivateRoutes from './Components/PrivateRoutes';
+import { history } from './_helpers/history';
+
+const Home = React.lazy(() => import('./Pages/Home'));
+const Login = React.lazy(() => import('./Pages/Login'));
+const Register = React.lazy(() => import('./Pages/Register'));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <React.Suspense fallback={<div>...loading</div>}>
+        <Router history={history}>
+          <Switch>
+            <PrivateRoutes exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </Router>
+      </React.Suspense>
     </div>
   );
 }
